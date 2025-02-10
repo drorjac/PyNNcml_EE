@@ -3,7 +3,7 @@ import utm
 import numpy as np
 from typing import List
 
-
+# this is the file we want to see
 class MetaData(object):
     def __init__(self,
                  frequency: float,
