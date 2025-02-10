@@ -254,7 +254,7 @@ class Link(LinkBase):
         rsl = np.lib.stride_tricks.as_strided(rsl, shape=(int(rsl.shape[0] / ratio), ratio), strides=(4 * ratio, 4))
         tsl = np.lib.stride_tricks.as_strided(tsl, shape=(int(tsl.shape[0] / ratio), ratio), strides=(4 * ratio, 4))
 
-        return gauge_data, rsl, tsl, np.asarray([self.meta_data.frequency, self.meta_data.length]).astype("float32")
+        return gauge_data, rsl, tsl, np.asarray([self.meta_data.frequency, self.meta_data.length, self.meta_data.distance]).astype("float32")
 
     def plot(self):
         """
