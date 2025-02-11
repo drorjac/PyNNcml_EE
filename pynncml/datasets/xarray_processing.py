@@ -104,7 +104,11 @@ def xarray2link(ds,
             else:
                 d_min, gauge = ps.find_near_gauge(md.xy_center())
                 if d_min < link2gauge_distance:
-                    link = xarray_sublink2link(ds_sublink, gauge)
+                    for i in range(ps.n_points):
+                        gauge = ps.point_set[i]
+                        link = xarray_sublink2link(ds_sublink, gauge)
+                        if change2min_max and link is not None:
+                        link = link.create_min_max_link(min_max_window)            
                 else:
                     link = None  # Link is too far from the gauge
             if change2min_max and link is not None:
