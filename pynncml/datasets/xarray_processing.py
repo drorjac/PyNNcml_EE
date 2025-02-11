@@ -111,7 +111,4 @@ def xarray2link(ds,
                             link = link.create_min_max_link(min_max_window)            
                 else:
                     link = None  # Link is too far from the gauge
-            if change2min_max and link is not None:
-                link = link.create_min_max_link(min_max_window)
-            if link is not None: link_list.append(link)
     return LinkSet(link_list)
