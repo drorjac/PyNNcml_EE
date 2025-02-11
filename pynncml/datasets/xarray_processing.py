@@ -108,7 +108,7 @@ def xarray2link(ds,
                         gauge = ps.point_set[i]
                         link = xarray_sublink2link(ds_sublink, gauge)
                         if change2min_max and link is not None:
-                        link = link.create_min_max_link(min_max_window)            
+                            link = link.create_min_max_link(min_max_window)            
                 else:
                     link = None  # Link is too far from the gauge
             if change2min_max and link is not None:
