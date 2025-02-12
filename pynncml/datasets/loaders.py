@@ -164,7 +164,7 @@ def loader_open_mrg_dataset(data_path="./data/",
                             xy_min=None,
                             xy_max=None,
                             time_slice=None,
-                            link2gauge_distance=2000,
+                            link2gauge_distance=1000,
                             window_size_in_min=15):
     """
     Load OpenMRG dataset
