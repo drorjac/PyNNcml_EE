@@ -124,7 +124,7 @@ def rain2rain_rate(in_array: np.ndarray, window_size: int = 15, step_time: int =
 
 
 def load_open_mrg(data_path="./data/", change2min_max=False, xy_min=None, xy_max=None, time_slice=None,
-                  rain_gauge_time_base=900, link2gauge_distance=2000, window_size_in_min=15):
+                  rain_gauge_time_base=900, link2gauge_distance=1000, window_size_in_min=15):
     download_open_mrg(local_path=data_path)
     file_location = data_path + "OpenMRG.zip"
     ds = transform_open_mrg(file_location, data_path)
