@@ -182,3 +182,63 @@ def loader_open_mrg_dataset(data_path="./data/",
                                         time_slice=time_slice, link2gauge_distance=link2gauge_distance,
                                         window_size_in_min=window_size_in_min)
     return LinkDataset(link_set, point_set)
+
+def load_open_mrg1(data_path="./data/", change2min_max=False, xy_min=None, xy_max=None, time_slice=None,
+                  rain_gauge_time_base=900, link2gauge_distance=2000, window_size_in_min=15):
+    download_open_mrg(local_path=data_path)
+    file_location = data_path + "OpenMRG.zip"
+    ds = transform_open_mrg(file_location, data_path)
+
+    if time_slice is not None:
+        ds = ds.sel(time=time_slice)
+
+    time_array = ds.time.to_numpy().astype('datetime64[s]')
+    ###########################################
+    # Process Gauge
+    ###########################################
+    gauge_metadata = pd.read_csv(os.path.join(data_path, 'gauges/city/CityGauges-metadata.csv'), index_col=0)
+    gauge_data = pd.read_csv(os.path.join(data_path, 'gauges/city/CityGauges-2015JJA.csv'), index_col=0)
+    time_array_gauge = np.asarray([np.datetime64(i[:-1]) for i in gauge_data.index.to_numpy()])
+    sel_index = np.logical_and(time_array_gauge >= time_array[0], time_array_gauge <= time_array[-1])
+    gauge_list = []
+    for g_id in gauge_data.keys():
+        gauge_data_array = gauge_data.get(g_id).values[sel_index]
+        rain_rate_gauge = rain2rain_rate(gauge_data_array, window_size=window_size_in_min)
+        i = np.where(gauge_metadata.index == g_id)[0]
+        lon = gauge_metadata.get("Longitude_DecDeg").values[i]
+        lat = gauge_metadata.get("Latitude_DecDeg").values[i]
+        if not np.any(np.isnan(rain_rate_gauge)):
+            ps = PointSensor(rain_rate_gauge, time_array_gauge.astype("int")[sel_index], lat, lon)
+            ps = ps.change_time_base(rain_gauge_time_base)
+            gauge_list.append(ps)
+    ps = PointSet(gauge_list)
+    ###########################################
+    # Process Links
+    ###########################################
+    link_set = xarray2link1(ds, link2gauge_distance, ps, xy_max, xy_min, change2min_max=change2min_max)
+    return link_set, ps
+
+
+def loader_open_mrg_dataset1(data_path="./data/",
+                            change2min_max=False,
+                            xy_min=None,
+                            xy_max=None,
+                            time_slice=None,
+                            link2gauge_distance=2000,
+                            window_size_in_min=15):
+    """
+    Load OpenMRG dataset
+    :param data_path: Path to store the dataset
+    :param change2min_max: Change to min max dataset
+    :param xy_min: Minimum xy use to filter the dataset based on xy location
+    :param xy_max: Maximum xy use to filter the dataset based on xy location
+    :param time_slice: Time slice to filter the dataset
+    :param link2gauge_distance: Link to gauge distance in meter
+    :param window_size_in_min: Window size in minute
+    :return: LinkDataset
+    """
+    link_set, point_set = load_open_mrg1(data_path=data_path, change2min_max=change2min_max, xy_min=xy_min,
+                                        xy_max=xy_max,
+                                        time_slice=time_slice, link2gauge_distance=link2gauge_distance,
+                                        window_size_in_min=window_size_in_min)
+    return LinkDataset(link_set, point_set)
