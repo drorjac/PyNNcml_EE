@@ -113,3 +113,55 @@ def xarray2link(ds,
                 else:
                     link = None  # Link is too far from the gauge
     return LinkSet(link_list)
+
+def xarray2link1(ds,
+                link2gauge_distance,
+                ps,
+                xy_max=None,
+                xy_min=None,
+                change2min_max=False,
+                min_max_window: int = 900):
+    """
+    Convert xarray dataset to link set
+    :param ds: xarray dataset
+    :param link2gauge_distance: distance between the link and the gauge
+    :param ps: PointSet
+    :param xy_max: max x and y
+    :param xy_min: min x and y
+    :param change2min_max: change to min max
+    :param min_max_window: window size for min max
+    :return: LinkSet
+    """
+    link_list = []
+    for i in tqdm(range(len(ds.sublink_id))):
+        ds_sublink = ds.isel(sublink_id=i)
+        md = MetaData(float(ds_sublink.frequency),
+                      "Vertical" in str(ds_sublink.polarization),
+                      float(ds_sublink.length),
+                      None,
+                      None,
+                      lon_lat_site_zero=[float(ds_sublink.site_0_lon), float(ds_sublink.site_0_lat)],
+                      lon_lat_site_one=[float(ds_sublink.site_1_lon), float(ds_sublink.site_1_lat)])
+        xy_array = md.xy()
+        if xy_min is None or xy_max is None:
+            x_check = y_check = True
+        else:
+            x_check = xy_min[0] < xy_array[0] and xy_min[0] < xy_array[2] and xy_max[0] > xy_array[2] and xy_max[0] > \
+                      xy_array[0]
+
+            y_check = xy_min[1] < xy_array[1] and xy_min[1] < xy_array[3] and xy_max[1] > xy_array[3] and xy_max[1] > \
+                      xy_array[1]
+
+        if x_check and y_check:
+            if ps == None:
+                link = xarray_sublink2link(ds_sublink)
+            else:
+                d_min, gauge = ps.find_near_gauge(md.xy_center())
+                if d_min < link2gauge_distance:
+                    link = xarray_sublink2link(ds_sublink, gauge)
+                else:
+                    link = None  # Link is too far from the gauge
+            if change2min_max and link is not None:
+                link = link.create_min_max_link(min_max_window)
+            if link is not None: link_list.append(link)
+    return LinkSet(link_list)
