@@ -12,7 +12,7 @@ from pynncml.datasets.gauge_data import PointSensor
 from pynncml.datasets import PointSet
 import numpy as np
 
-from pynncml.datasets.xarray_processing import xarray2link
+from pynncml.datasets.xarray_processing import xarray2link, xarray2link1
 
 
 def download_data_file(url, local_path=".", local_file_name=None, print_output=True):
