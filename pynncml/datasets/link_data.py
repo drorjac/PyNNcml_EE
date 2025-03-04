@@ -230,8 +230,8 @@ class Link(LinkBase):
         tsl = self.link_tsl
         time_link = self.time_array
         gauge_data = self.gauge_ref.data_array
-        if gauge_start_cut:
-            raise NotImplemented
+        # if gauge_start_cut:
+        #     raise NotImplemented
 
         if gauge_end_cut:
             link_end_point = self.time_array[-1] - self.time_array[-1] % delta_gauge
