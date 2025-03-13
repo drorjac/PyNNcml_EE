@@ -8,7 +8,9 @@ The notebooks we have created are uploaded to this GitHub under the following na
 - MRG_Data_Driven_PyNNCML.ipynb - The training process of the network.
 - MRG_Data_Driven_PyNNCML_for_maps_work.ipynb - The full map building algorithm from the NN estimation.
 - model_driven_tutorial.ipynb - The full map building algorithm from Power Law estimation.
-
+(https://cellenmonlab.tau.ac.il/) at Tel Aviv University.
+ ![plot](./images/cml_figure.png)
+ * The figure above was create by Jonatan Ostrometzky.
 # Getting Started
 ## Installation
 PyNNcml is available on PyPI. To install, run the following command:
