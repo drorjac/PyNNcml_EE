@@ -8,6 +8,8 @@ The notebooks we have created are uploaded to this GitHub under the following na
 - MRG_Data_Driven_PyNNCML.ipynb - The training process of the network.
 - MRG_Data_Driven_PyNNCML_for_maps_work.ipynb - The full map building algorithm from the NN estimation.
 - model_driven_tutorial.ipynb - The full map building algorithm from Power Law estimation.
+Our results of trying different runs on the network and on the map nuilding algorithm can be foumd in the following folder:
+https://drive.google.com/drive/folders/1OYPueZZ17zWL6Zd8od-W0bEwvicfy185?usp=sharing
 (https://cellenmonlab.tau.ac.il/) at Tel Aviv University.
  ![plot](./images/cml_figure.png)
  * The figure above was create by Jonatan Ostrometzky.
