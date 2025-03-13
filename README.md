@@ -3,7 +3,7 @@
 A python toolbox based on PyTorch which utilized neural network for rain estimation and classification from commercial microwave link (CMLs) data. This toolbox provides an implementation of algorithms for extracting rain-rate using neural networks and CMLs. Addinaly this project provides an example dataset with data from two CMLs and implementation of performance and robustness metrics.  
 
 This project was initially create as  part of the M.Sc. thesis of Hai Victor Habi, under the supervision of Prof. Hagit Messer at Tel Aviv University.
-NOw, we, Yuval Gafny & Amit Gonda have taken this network and modified it as a part of our finals priject of our B.A. 
+Now, we, Yuval Gafny & Amit Gonda have taken this network and modified it as a part of our finals priject of our B.A. 
 The notebooks we have created are uploaded to this GitHub under the following names:
 - MRG_Data_Driven_PyNNCML.ipynb - The training process of the network.
 - MRG_Data_Driven_PyNNCML_for_maps_work.ipynb - The full map building algorithm from the NN estimation.
